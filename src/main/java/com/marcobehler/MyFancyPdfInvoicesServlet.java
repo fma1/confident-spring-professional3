@@ -1,0 +1,36 @@
+package com.marcobehler;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+public class MyFancyPdfInvoicesServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (request.getRequestURI().equalsIgnoreCase("/")) {
+            String userId = request.getParameter("user_id");
+            Integer amount = Integer.valueOf(request.getParameter("amount"));
+
+            Invoice invoice = new InvoiceService().create(userId, amount);
+
+            response.setContentType("application/json; charset=UTF-8");
+            String json = new ObjectMapper().writeValueAsString(invoice);
+            response.getWriter().print(json);
+            /*
+            response.setContentType("text/html; charset=UTF-8");
+            response.getWriter().print(
+                "<html>\n" +
+                    "<body>\n" +
+                    "<h1>Hello World</h1>\n" +
+                    "<p>This is my very first, embedded Tomcat, HTML Page!</p>\n" +
+                    "</body>\n" +
+                    "</html>");
+             */
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+}
