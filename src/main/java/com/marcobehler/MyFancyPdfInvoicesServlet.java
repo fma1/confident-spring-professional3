@@ -11,15 +11,6 @@ public class MyFancyPdfInvoicesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (request.getRequestURI().equalsIgnoreCase("/")) {
-            String userId = request.getParameter("user_id");
-            Integer amount = Integer.valueOf(request.getParameter("amount"));
-
-            Invoice invoice = new InvoiceService().create(userId, amount);
-
-            response.setContentType("application/json; charset=UTF-8");
-            String json = new ObjectMapper().writeValueAsString(invoice);
-            response.getWriter().print(json);
-            /*
             response.setContentType("text/html; charset=UTF-8");
             response.getWriter().print(
                 "<html>\n" +
@@ -28,9 +19,27 @@ public class MyFancyPdfInvoicesServlet extends HttpServlet {
                     "<p>This is my very first, embedded Tomcat, HTML Page!</p>\n" +
                     "</body>\n" +
                     "</html>");
-             */
         } else {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (request.getRequestURI().equalsIgnoreCase("/invoices")) {
+
+            String userId = request.getParameter("user_id");
+            Integer amount = Integer.valueOf(request.getParameter("amount"));
+
+            Invoice invoice = new InvoiceService().create(userId, amount);
+
+            response.setContentType("application/json; charset=UTF-8");
+            String json = new ObjectMapper().writeValueAsString(invoice);
+            response.getWriter().print(json);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
+
 }
