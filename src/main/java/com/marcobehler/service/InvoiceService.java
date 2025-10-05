@@ -1,5 +1,6 @@
-package com.marcobehler;
+package com.marcobehler.service;
 
+import com.marcobehler.model.Invoice;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
