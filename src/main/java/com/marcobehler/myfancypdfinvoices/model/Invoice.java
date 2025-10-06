@@ -1,4 +1,4 @@
-package com.marcobehler.model;
+package com.marcobehler.myfancypdfinvoices.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
